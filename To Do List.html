@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> To-Do List📝 </title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+<body>
+    <div class="container">
+        <header>
+            <h1>To-Do List 📝</h1>
+        </header>
+
+        <main>
+            <form id="taskForm" class="task-form">
+                <input type="text" id="taskInput" placeholder="Inserisci un'attività..." required>
+                <select id="categorySelect">
+                    <option value="Personale">Personale</option>
+                    <option value="Lavoro">Lavoro</option>
+                    <option value="Studio">Studio</option>
+                </select>
+                <input type="datetime-local" id="dueDate" required>
+                <button type="submit">Aggiungi</button>
+            </form>
+            
+
+            <!-- Lista delle attività -->
+            <div class="task-sections">
+                <section id="personale" class="task-category">
+                    <h2>👤 Personale</h2>
+                    <ul id="personaleList"></ul>
+                </section>
+                <section id="lavoro" class="task-category">
+                    <h2>💼 Lavoro</h2>
+                    <ul id="lavoroList"></ul>
+                </section>
+                <section id="studio" class="task-category">
+                    <h2>📚 Studio</h2>
+                    <ul id="studioList"></ul>
+                </section>
+                
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; La tua To-Do List, la tua produttività.</p>
+        </footer>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    let tasks = {
+        Personale: [],
+        Lavoro: [],
+        Studio: []
+    };
+
+    const taskForm = document.getElementById("taskForm");
+    const taskInput = document.getElementById("taskInput");
+    const categorySelect = document.getElementById("categorySelect");
+    const dueDate = document.getElementById("dueDate");
+
+    const personaleList = document.getElementById("personaleList");
+    const lavoroList = document.getElementById("lavoroList");
+    const studioList = document.getElementById("studioList");
+
+    function addTask(task, category, dateTime) {
+        if (task && task.trim() !== "") {
+            tasks[category].push({ task: task.trim(), dueDate: dateTime, completed: false });
+            displayTasks();
+        } else {
+            alert("L'attività non può essere vuota.");
+        }
+    }
+
+    function removeTask(category, index) {
+        if (index >= 0 && index < tasks[category].length) {
+            tasks[category].splice(index, 1);
+            displayTasks();
+        }
+    }
+
+    function toggleTaskCompletion(category, index) {
+        tasks[category][index].completed = !tasks[category][index].completed;
+        displayTasks();
+    }
+
+    function isOverdue(dateTime) {
+        const now = new Date();
+        const dueDateTime = new Date(dateTime);
+        return dueDateTime < now;
+    }
+
+    function displayTasks() {
+        personaleList.innerHTML = "";
+        lavoroList.innerHTML = "";
+        studioList.innerHTML = "";
+
+        tasks.Personale.forEach((taskItem, index) => {
+            const li = document.createElement("li");
+            li.textContent = `${taskItem.task} - Scadenza: ${taskItem.dueDate}`;
+            if (taskItem.completed) {
+                li.style.textDecoration = "line-through"; // Barrato se completato
+                li.style.color = "gray"; // Cambia colore per completato
+            }
+            if (isOverdue(taskItem.dueDate) && !taskItem.completed) {
+                li.style.color = "red"; // Evidenzia in rosso se scaduto
+            }
+
+            const completeButton = document.createElement("button");
+            completeButton.textContent = "✔️";
+            completeButton.addEventListener("click", () => toggleTaskCompletion("Personale", index));
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "❌";
+            removeButton.addEventListener("click", () => removeTask("Personale", index));
+
+            li.appendChild(completeButton);
+            li.appendChild(removeButton);
+            personaleList.appendChild(li);
+        });
+
+        tasks.Lavoro.forEach((taskItem, index) => {
+            const li = document.createElement("li");
+            li.textContent = `${taskItem.task} - Scadenza: ${taskItem.dueDate}`;
+            if (taskItem.completed) {
+                li.style.textDecoration = "line-through";
+                li.style.color = "gray";
+            }
+            if (isOverdue(taskItem.dueDate) && !taskItem.completed) {
+                li.style.color = "red";
+            }
+
+            const completeButton = document.createElement("button");
+            completeButton.textContent = "✔️";
+            completeButton.addEventListener("click", () => toggleTaskCompletion("Lavoro", index));
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "❌";
+            removeButton.addEventListener("click", () => removeTask("Lavoro", index));
+
+            li.appendChild(completeButton);
+            li.appendChild(removeButton);
+            lavoroList.appendChild(li);
+        });
+
+        tasks.Studio.forEach((taskItem, index) => {
+            const li = document.createElement("li");
+            li.textContent = `${taskItem.task} - Scadenza: ${taskItem.dueDate}`;
+            if (taskItem.completed) {
+                li.style.textDecoration = "line-through";
+                li.style.color = "gray";
+            }
+            if (isOverdue(taskItem.dueDate) && !taskItem.completed) {
+                li.style.color = "red";
+            }
+
+            const completeButton = document.createElement("button");
+completeButton.textContent = "✔️";
+completeButton.classList.add("complete-btn");
+completeButton.addEventListener("click", () => toggleTaskCompletion("Personale", index));
+
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "❌";
+            removeButton.addEventListener("click", () => removeTask("Studio", index));
+
+            li.appendChild(completeButton);
+            li.appendChild(removeButton);
+            studioList.appendChild(li);
+        });
+    }
+
+    taskForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const task = taskInput.value;
+        const category = categorySelect.value;
+        const dateTime = dueDate.value;
+        addTask(task, category, dateTime);
+        taskInput.value = "";
+        dueDate.value = "";
+    });
+
+    displayTasks();
+});
+
+
+
+    </script>
+</body>
+</html>

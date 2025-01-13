@@ -1,0 +1,123 @@
+/* Impostazioni di base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Contenitore principale */
+.container {
+    width: 90%;
+    max-width: 800px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background: #be8abe;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+}
+
+/* Form per aggiungere attività */
+.task-form {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.task-form input,
+.task-form select,
+.task-form button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.task-form button {
+    background: #be8abe;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.task-form button:hover {
+    background: #be8abe;
+}
+
+/* Categorie */
+.task-sections {
+    padding: 20px;
+}
+
+.task-category {
+    margin-bottom: 30px;
+}
+
+.task-category h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #eeb2ee;
+    display: inline-block;
+}
+
+.task-category ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.task-category li {
+    background: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-category li button {
+    background: #eceff1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.task-category li button:hover {
+    background: #d6cece;
+}
+
+/* Footer */
+footer {
+    background: #be8abe;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
+}
